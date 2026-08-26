@@ -15,16 +15,24 @@ public class productService {
     @Autowired
     private productRepo repo;
 
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         return repo.findAll();
     }
-    public Product getProductById(int id){
+
+    public Product getProductById(int id) {
         return repo.findById(id).orElse(null);
     }
-    public Product addProduct(Product product, MultipartFile product_image) throws IOException {
+
+    public Product addorupdateProduct(Product product, MultipartFile product_image) throws IOException {
         product.setProduct_Image_Name(product_image.getOriginalFilename());
         product.setProduct_Image_Type(product_image.getContentType());
         product.setProduct_Image(product_image.getBytes());
         return repo.save(product);
     }
+
+    public void deleteProductById(int id) {
+        repo.deleteById(id);
+    }
+
+
 }

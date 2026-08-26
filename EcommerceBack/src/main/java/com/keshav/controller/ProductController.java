@@ -1,6 +1,7 @@
 package com.keshav.controller;
 
 import com.keshav.model.Product;
+import com.keshav.repo.productRepo;
 import com.keshav.service.productService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ public class ProductController {
 
     @Autowired
     private productService service;
+    @Autowired
+    private productRepo productRepo;
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProducts() {
@@ -34,13 +37,46 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/product/{id}/image")
+    public ResponseEntity<byte[]> getProductImage(@PathVariable Integer id) {
+        Product product = service.getProductById(id);
+        if (product != null) {
+            return new ResponseEntity<>(product.getProduct_Image(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/addproduct")
     public ResponseEntity<?> addProduct(@RequestPart Product product, @RequestPart MultipartFile product_image) {
         try {
-            Product savedProduct = service.addProduct(product, product_image);
+            Product savedProduct = service.addorupdateProduct(product, product_image);
             return new ResponseEntity<>(savedProduct, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/product/{id}")
+    public ResponseEntity<?> updateProduct(@RequestPart Product product, @RequestPart MultipartFile product_image) {
+        Product updatedProduct = new Product();
+        try {
+            updatedProduct = service.addorupdateProduct(product, product_image);
+            return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
+        Product product = service.getProductById(id);
+        if (product != null) {
+            service.deleteProductById(id);
+            return new ResponseEntity<>("deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
