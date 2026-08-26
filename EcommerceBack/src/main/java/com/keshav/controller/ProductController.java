@@ -73,7 +73,7 @@ public class ProductController {
         Product product = service.getProductById(id);
         if (product != null) {
             service.deleteProductById(id);
-            return new ResponseEntity<>("deleted", HttpStatus.OK);
+            return new ResponseEntity<>("deleted successfully", HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

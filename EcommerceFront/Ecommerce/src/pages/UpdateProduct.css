@@ -1,0 +1,74 @@
+.update-product-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.update-product-container h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.update-product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.update-product-form input,
+.update-product-form textarea,
+.update-product-form select {
+    width: 100%;
+    padding: 11px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.update-product-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.update-product-form input:focus,
+.update-product-form textarea:focus,
+.update-product-form select:focus {
+    outline: none;
+    border-color: #555;
+}
+
+.status-label,
+.image-label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.update-product-form button {
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 7px;
+    background-color: #222;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.update-product-form button:hover {
+    background-color: #444;
+}
+
+@media (max-width: 650px) {
+    .update-product-container {
+        margin: 20px;
+        padding: 20px;
+    }
+}
