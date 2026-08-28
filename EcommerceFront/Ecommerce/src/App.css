@@ -1,57 +1,150 @@
+/* ========================================
+   GLOBAL APP STYLES
+======================================== */
+
 * {
     box-sizing: border-box;
 }
 
+
+html {
+    scroll-behavior: smooth;
+}
+
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #222;
+
+    min-width: 320px;
+
+    background: #f8f8f8;
+    color: #171717;
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
 }
 
-.title {
-    color: #222;
-}
 
-.home {
+/* ========================================
+   ROOT APP
+======================================== */
+
+#root {
     min-height: 100vh;
+
     display: flex;
     flex-direction: column;
+}
+
+
+/* ========================================
+   HOME
+======================================== */
+
+.home {
+    min-height: calc(100vh - 72px);
+
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    text-align: center;
-    padding: 20px;
+
+    padding: 40px;
 }
 
-.home h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
+
+/* ========================================
+   LINKS
+======================================== */
+
+a {
+    color: inherit;
+
+    text-decoration: none;
 }
 
-.home button {
-    width: 200px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #222;
-    color: white;
+
+/* ========================================
+   BUTTON RESET
+======================================== */
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+/* ========================================
+   SELECTION
+======================================== */
+
+::selection {
+    background: #171717;
+    color: #ffffff;
+}
+
+
+/* ========================================
+   SCROLLBAR
+======================================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+
+    border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+
+/* ========================================
+   LOADING / EMPTY TEXT
+======================================== */
+
+.loading,
+.empty-message {
+    min-height: 50vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #777;
+
     font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s ease;
 }
 
-.home button:hover {
-    background-color: #444;
-    transform: translateY(-2px);
-}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
 
 @media (max-width: 600px) {
-    .home h1 {
-        font-size: 28px;
-    }
 
-    .home button {
-        width: 180px;
+    .home {
+        min-height: calc(100vh - 180px);
+
+        padding: 25px;
     }
 }

@@ -1,74 +1,350 @@
+/* ========================================
+   ADD PRODUCT PAGE
+======================================== */
+
 .add-product-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: min(900px, 92%);
+
+    margin: 45px auto;
+    padding: 35px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.06);
+
+    animation: formAppear 0.5s ease both;
 }
+
+
+/* ========================================
+   PAGE TITLE
+======================================== */
 
 .add-product-container h1 {
+    margin: 0 0 30px;
+
     text-align: center;
-    margin-bottom: 25px;
+
+    color: #171717;
+
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
+
+/* ========================================
+   FORM
+======================================== */
+
 .add-product-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
 }
+
+
+/* ========================================
+   INPUTS + TEXTAREA
+======================================== */
 
 .add-product-form input,
 .add-product-form textarea,
 .add-product-form select {
     width: 100%;
-    padding: 11px;
+
     box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    font-size: 15px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 9px;
+
+    background: #fafafa;
+
+    color: #222;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        background-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
 }
 
-.add-product-form textarea {
-    min-height: 100px;
-    resize: vertical;
+
+/* Placeholder */
+
+.add-product-form input::placeholder,
+.add-product-form textarea::placeholder {
+    color: #999;
 }
+
+
+/* Focus */
 
 .add-product-form input:focus,
 .add-product-form textarea:focus,
 .add-product-form select:focus {
-    outline: none;
-    border-color: #555;
+    border-color: #888;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
-.status-label,
-.image-label {
+
+/* ========================================
+   TEXTAREA
+======================================== */
+
+.add-product-form textarea {
+    min-height: 110px;
+
+    resize: vertical;
+
+    grid-column: 1 / -1;
+}
+
+
+/* ========================================
+   DATE INPUT
+======================================== */
+
+.add-product-form input[type="date"] {
+    color: #444;
+
+    cursor: pointer;
+}
+
+
+/* ========================================
+   NUMBER INPUT
+======================================== */
+
+.add-product-form input[type="number"] {
+    appearance: textfield;
+}
+
+
+/* ========================================
+   STATUS
+======================================== */
+
+.status-label {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+
+    gap: 7px;
+
+    color: #444;
+
+    font-size: 13px;
     font-weight: 500;
 }
 
-.add-product-form button {
-    padding: 12px;
-    margin-top: 10px;
+
+/* ========================================
+   IMAGE UPLOAD
+======================================== */
+
+.image-label {
+    grid-column: 1 / -1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+
+    color: #444;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+/* File input */
+
+.image-label input[type="file"] {
+    padding: 10px;
+
+    background: #fafafa;
+
+    cursor: pointer;
+}
+
+
+/* File selector button */
+
+.image-label input[type="file"]::file-selector-button {
+    margin-right: 12px;
+
+    padding: 8px 13px;
+
     border: none;
     border-radius: 7px;
-    background-color: #222;
-    color: white;
-    font-size: 16px;
+
+    background: #171717;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+
     cursor: pointer;
-    transition: 0.2s ease;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.2s ease;
 }
 
-.add-product-form button:hover {
-    background-color: #444;
+
+.image-label input[type="file"]::file-selector-button:hover {
+    background: #333;
 }
 
-@media (max-width: 650px) {
+
+.image-label input[type="file"]::file-selector-button:active {
+    transform: scale(0.96);
+}
+
+
+/* ========================================
+   SUBMIT BUTTON
+======================================== */
+
+.add-product-form>button {
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 13px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #171717;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.2s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.add-product-form>button:hover {
+    background: #333;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+
+.add-product-form>button:active {
+    transform: translateY(0) scale(0.98);
+
+    box-shadow: none;
+}
+
+
+/* ========================================
+   ANIMATION
+======================================== */
+
+@keyframes formAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 700px) {
+
     .add-product-container {
-        margin: 20px;
+        width: 88%;
+
+        margin: 30px auto;
+
+        padding: 25px;
+    }
+
+    .add-product-form {
+        grid-template-columns: 1fr;
+    }
+
+    .add-product-form textarea,
+    .image-label,
+    .add-product-form>button {
+        grid-column: auto;
+    }
+
+    .add-product-container h1 {
+        font-size: 25px;
+    }
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 450px) {
+
+    .add-product-container {
+        width: 88%;
+
+        margin: 20px auto;
+
         padding: 20px;
+
+        border-radius: 12px;
+    }
+
+    .add-product-container h1 {
+        margin-bottom: 22px;
+
+        font-size: 23px;
+    }
+
+    .add-product-form {
+        gap: 14px;
+    }
+
+    .add-product-form input,
+    .add-product-form textarea,
+    .add-product-form select {
+        padding: 11px 12px;
     }
 }

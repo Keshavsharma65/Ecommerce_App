@@ -1,0 +1,389 @@
+/* ================================
+   NAVBAR
+================================ */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    width: 100%;
+    min-height: 72px;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    padding: 0 40px;
+
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid #eaeaea;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+
+    backdrop-filter: blur(12px);
+}
+
+
+/* ================================
+   LEFT - NAVIGATION BUTTONS
+================================ */
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    animation: slideFromLeft 0.5s ease;
+}
+
+.navbar-left button {
+    position: relative;
+
+    padding: 10px 15px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+    color: #444;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.2s ease;
+}
+
+
+/* Hover */
+
+.navbar-left button:hover {
+    color: #111;
+    background-color: #f3f3f3;
+
+    transform: translateY(-1px);
+}
+
+
+/* Animated underline */
+
+.navbar-left button::after {
+    content: "";
+
+    position: absolute;
+
+    left: 15px;
+    right: 15px;
+    bottom: 5px;
+
+    height: 2px;
+
+    background-color: #111;
+
+    transform: scaleX(0);
+    transform-origin: center;
+
+    transition: transform 0.25s ease;
+}
+
+.navbar-left button:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* Click */
+
+.navbar-left button:active {
+    transform: scale(0.95);
+}
+
+
+/* ================================
+   CENTER - TITLE
+================================ */
+
+.navbar-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    animation: fadeDown 0.5s ease;
+}
+
+.navbar-title h2 {
+    margin: 0;
+
+    color: #171717;
+
+    font-size: 23px;
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.navbar-title h2:hover {
+    opacity: 0.75;
+    transform: scale(1.02);
+}
+
+
+/* ================================
+   RIGHT - SEARCH
+================================ */
+
+.search-form {
+    justify-self: end;
+
+    display: flex;
+    align-items: center;
+
+    width: 310px;
+    height: 42px;
+
+    border: 1px solid #dedede;
+    border-radius: 10px;
+
+    background-color: #fafafa;
+
+    overflow: hidden;
+
+    animation: slideFromRight 0.5s ease;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+
+/* Search focus */
+
+.search-form:focus-within {
+    border-color: #999;
+
+    background-color: #fff;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ================================
+   SEARCH INPUT
+================================ */
+
+.search-form input {
+    flex: 1;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0 14px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #222;
+
+    font-size: 14px;
+}
+
+.search-form input::placeholder {
+    color: #999;
+
+    transition: color 0.2s ease;
+}
+
+.search-form input:focus::placeholder {
+    color: #c0c0c0;
+}
+
+
+/* ================================
+   SEARCH BUTTON
+================================ */
+
+.search-form button {
+    width: 48px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    background: #171717;
+    color: #fff;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.2s ease;
+}
+
+.search-form button:hover {
+    background: #333;
+}
+
+.search-form button:active {
+    transform: scale(0.9);
+}
+
+
+/* ================================
+   ANIMATIONS
+================================ */
+
+@keyframes slideFromLeft {
+
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+@keyframes slideFromRight {
+
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+@keyframes fadeDown {
+
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 1000px) {
+
+    .navbar {
+        padding: 0 25px;
+    }
+
+    .search-form {
+        width: 240px;
+    }
+
+    .navbar-left button {
+        padding: 9px 11px;
+        font-size: 13px;
+    }
+
+    .navbar-title h2 {
+        font-size: 21px;
+    }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 750px) {
+
+    .navbar {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        padding: 15px 20px;
+    }
+
+
+    .navbar-title {
+        order: 1;
+    }
+
+
+    .navbar-left {
+        order: 2;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+    }
+
+
+    .search-form {
+        order: 3;
+
+        justify-self: center;
+
+        width: min(100%, 380px);
+    }
+}
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 450px) {
+
+    .navbar {
+        padding: 13px 15px;
+    }
+
+    .navbar-left {
+        gap: 3px;
+    }
+
+    .navbar-left button {
+        padding: 8px 9px;
+        font-size: 12px;
+    }
+
+    .search-form {
+        height: 40px;
+    }
+
+    .search-form button {
+        width: 44px;
+    }
+}
