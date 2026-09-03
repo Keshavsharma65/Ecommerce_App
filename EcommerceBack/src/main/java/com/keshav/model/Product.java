@@ -14,7 +14,7 @@ public class Product {
     private String productCode;
     private String product_Name;
     private String product_description;
-    private Double product_Price;
+    private Integer product_Price;
     private String product_Category;
     private Date product_Date;
     private Boolean product_Status;
@@ -68,7 +68,7 @@ public class Product {
         return product_description;
     }
 
-    public Double getProduct_Price() {
+    public Integer getProduct_Price() {
         return product_Price;
     }
 
@@ -100,7 +100,7 @@ public class Product {
         this.product_description = product_description;
     }
 
-    public void setProduct_Price(Double product_Price) {
+    public void setProduct_Price(Integer product_Price) {
         this.product_Price = product_Price;
     }
 
@@ -138,7 +138,7 @@ public class Product {
                 '}';
     }
 
-    public Product(Integer product_Id, String productCode, String product_Name, String product_description, Double product_Price, String product_Category, Date product_Date, Boolean product_Status, Integer product_Stock, String product_Image_Name, String product_Image_Type, byte[] product_Image) {
+    public Product(Integer product_Id, String productCode, String product_Name, String product_description, Integer product_Price, String product_Category, Date product_Date, Boolean product_Status, Integer product_Stock, String product_Image_Name, String product_Image_Type, byte[] product_Image) {
         this.product_Id = product_Id;
         this.productCode = productCode;
         this.product_Name = product_Name;
