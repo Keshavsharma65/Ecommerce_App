@@ -18,6 +18,12 @@ const Orders = () => {
 
                 console.log("Orders received:", response.data);
 
+                // Inspect the exact order-item structure
+                response.data.forEach((order, index) => {
+                    console.log(`Order ${index + 1}:`, order);
+                    console.log(`Order ${index + 1} items:`, order.items);
+                });
+
                 setOrders(response.data);
 
             } catch (error) {
@@ -151,177 +157,191 @@ const Orders = () => {
 
             ) : (
 
-                /* ================= ORDERS ================= */
-
                 <div className="orders-list">
 
-                    {orders.map((order, index) => {
+                    {orders.map((order, index) => (
 
-                        return (
+                        <div
+                            className="order-card"
+                            key={order.orderId || index}
+                        >
 
-                            <div
-                                className="order-card"
-                                key={order.orderId || index}
-                            >
+                            {/* ================= ORDER HEADER ================= */}
 
-                                {/* ================= ORDER HEADER ================= */}
+                            <div className="order-card-top">
 
-                                <div className="order-card-top">
+                                <div>
 
-                                    <div>
-
-                                        <span className="order-number">
-                                            ORDER #{order.orderId || index + 1}
-                                        </span>
-
-                                        <h2>
-                                            Order Details
-                                        </h2>
-
-                                    </div>
-
-
-                                    <span className="order-status">
-
-                                        ✓ {order.status || "Placed"}
-
+                                    <span className="order-number">
+                                        ORDER #{order.orderId || index + 1}
                                     </span>
 
-                                </div>
-
-
-                                <div className="order-divider"></div>
-
-
-                                {/* ================= ORDER DETAILS ================= */}
-
-                                <div className="order-details">
-
-                                    {Object.entries(order)
-                                        .filter(([key]) => key !== "items")
-                                        .map(([key, value]) => (
-
-                                            <div
-                                                className="order-detail"
-                                                key={key}
-                                            >
-
-                                                <span className="order-detail-label">
-                                                    {formatLabel(key)}
-                                                </span>
-
-                                                <strong>
-                                                    {formatValue(key, value)}
-                                                </strong>
-
-                                            </div>
-
-                                        ))}
+                                    <h2>
+                                        Order Details
+                                    </h2>
 
                                 </div>
 
 
-                                {/* ================= PRODUCTS ================= */}
-
-                                {Array.isArray(order.items) &&
-                                    order.items.length > 0 && (
-
-                                        <div className="ordered-items">
-
-                                            <h3>
-                                                Products Ordered
-                                            </h3>
-
-
-                                            <div className="ordered-items-list">
-
-                                                {order.items.map(
-                                                    (item, itemIndex) => {
-
-                                                        /*
-                                                         * Different possible
-                                                         * property names are
-                                                         * supported here.
-                                                         */
-
-                                                        const productName =
-                                                            item.productName ??
-                                                            item.product_Name ??
-                                                            item.name ??
-                                                            item.product;
-
-                                                        const quantity =
-                                                            item.quantity ??
-                                                            item.productQuantity ??
-                                                            item.product_Quantity ??
-                                                            0;
-
-                                                        const price =
-                                                            item.price ??
-                                                            item.productPrice ??
-                                                            item.product_Price ??
-                                                            item.amount ??
-                                                            item.totalPrice ??
-                                                            0;
-
-
-                                                        return (
-
-                                                            <div
-                                                                className="ordered-item"
-                                                                key={itemIndex}
-                                                            >
-
-                                                                {/* PRODUCT INFO */}
-
-                                                                <div className="ordered-item-info">
-
-                                                                    <span className="ordered-item-number">
-                                                                        {itemIndex + 1}
-                                                                    </span>
-
-
-                                                                    <div>
-
-                                                                        <strong>
-                                                                            {productName || "Unknown Product"}
-                                                                        </strong>
-
-                                                                        <span>
-                                                                            Quantity: {quantity}
-                                                                        </span>
-
-                                                                    </div>
-
-                                                                </div>
-
-
-                                                                {/* PRICE */}
-
-                                                                <strong className="ordered-item-price">
-
-                                                                    ₹{Number(price).toLocaleString("en-IN")}
-
-                                                                </strong>
-
-                                                            </div>
-
-                                                        );
-
-                                                    }
-                                                )}
-
-                                            </div>
-
-                                        </div>
-
-                                    )}
+                                <span className="order-status">
+                                    ✓ {order.status || "Placed"}
+                                </span>
 
                             </div>
 
-                        );
 
-                    })}
+                            <div className="order-divider"></div>
+
+
+                            {/* ================= ORDER DETAILS ================= */}
+
+                            <div className="order-details">
+
+                                {Object.entries(order)
+                                    .filter(([key]) => key !== "items")
+                                    .map(([key, value]) => (
+
+                                        <div
+                                            className="order-detail"
+                                            key={key}
+                                        >
+
+                                            <span className="order-detail-label">
+                                                {formatLabel(key)}
+                                            </span>
+
+                                            <strong>
+                                                {formatValue(key, value)}
+                                            </strong>
+
+                                        </div>
+
+                                    ))}
+
+                            </div>
+
+
+                            {/* ================= PRODUCTS ORDERED ================= */}
+
+                            {Array.isArray(order.items) &&
+                                order.items.length > 0 && (
+
+                                    <div className="ordered-items">
+
+                                        <h3>
+                                            Products Ordered
+                                        </h3>
+
+
+                                        <div className="ordered-items-list">
+
+                                            {order.items.map(
+                                                (item, itemIndex) => {
+
+                                                    /*
+                                                     * Product name
+                                                     */
+
+                                                    const productName =
+                                                        item.productName ??
+                                                        item.product_Name ??
+                                                        item.name ??
+                                                        "Unknown Product";
+
+
+                                                    /*
+                                                     * Quantity
+                                                     *
+                                                     * Prefer productQuantity
+                                                     * if the backend provides it.
+                                                     */
+
+                                                    const quantity =
+                                                        item.productQuantity ??
+                                                        item.product_Quantity ??
+                                                        item.quantity ??
+                                                        0;
+
+
+                                                    /*
+                                                     * Price
+                                                     */
+
+                                                    const price =
+                                                        item.productPrice ??
+                                                        item.product_Price ??
+                                                        item.price ??
+                                                        item.totalPrice ??
+                                                        item.amount ??
+                                                        0;
+
+
+                                                    console.log(
+                                                        "ORDER ITEM:",
+                                                        {
+                                                            productName,
+                                                            quantity,
+                                                            price,
+                                                            rawItem: item
+                                                        }
+                                                    );
+
+
+                                                    return (
+
+                                                        <div
+                                                            className="ordered-item"
+                                                            key={itemIndex}
+                                                        >
+
+                                                            {/* PRODUCT INFORMATION */}
+
+                                                            <div className="ordered-item-info">
+
+                                                                <span className="ordered-item-number">
+                                                                    {itemIndex + 1}
+                                                                </span>
+
+
+                                                                <div>
+
+                                                                    <strong>
+                                                                        {productName}
+                                                                    </strong>
+
+                                                                    <span>
+                                                                        Quantity: {quantity}
+                                                                    </span>
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            {/* PRODUCT PRICE */}
+
+                                                            <strong className="ordered-item-price">
+
+                                                                ₹{Number(price).toLocaleString("en-IN")}
+
+                                                            </strong>
+
+                                                        </div>
+
+                                                    );
+
+                                                }
+                                            )}
+
+                                        </div>
+
+                                    </div>
+
+                                )}
+
+                        </div>
+
+                    ))}
 
                 </div>
 
@@ -357,8 +377,7 @@ const formatValue = (key, value) => {
 
 
     /*
-     * Arrays / objects should never be rendered
-     * directly.
+     * Don't render arrays/objects directly.
      */
 
     if (typeof value === "object") {
@@ -366,7 +385,9 @@ const formatValue = (key, value) => {
     }
 
 
-    /* ================= PRICE ================= */
+    /*
+     * Price / amount / total
+     */
 
     if (
         key.toLowerCase().includes("price") ||
@@ -383,7 +404,9 @@ const formatValue = (key, value) => {
     }
 
 
-    /* ================= BOOLEAN ================= */
+    /*
+     * Boolean
+     */
 
     if (typeof value === "boolean") {
 

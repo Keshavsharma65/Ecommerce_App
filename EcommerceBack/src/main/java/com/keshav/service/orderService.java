@@ -72,7 +72,7 @@ public class orderService {
         List<orderResponse> orderresponses = new ArrayList<>();
         for (order order : orders) {
             ArrayList<orderItemResponse> itemResponses = new ArrayList<orderItemResponse>();
-            for (orderItem item : orders.get(0).getOrderItems()) {
+            for (orderItem item : order.getOrderItems()) {
                 orderItemResponse orderitemresponse = new orderItemResponse(item.getProduct().getProduct_Name(), item.getQuantity(), item.getPrice());
                 itemResponses.add(orderitemresponse);
             }
