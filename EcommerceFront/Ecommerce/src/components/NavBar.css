@@ -1,5 +1,8 @@
 /* ================================
-   NAVBAR
+   NAVBAR — the manifest's letterhead:
+   an ink rule beneath, a dashed ticket
+   for search, a wax-seal cart badge.
+   Requires theme.css to be linked first.
 ================================ */
 
 .navbar {
@@ -13,19 +16,35 @@
     padding: 0 35px;
     box-sizing: border-box;
 
-    background: #ffffff;
-    border-bottom: 1px solid #e8e8e8;
+    background: var(--paper);
+    border-bottom: 2px solid var(--ink);
 
     position: sticky;
     top: 0;
     z-index: 1000;
 
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 3px 15px rgba(28, 31, 26, 0.05);
+
+    font-family: var(--font-mono);
+
+    animation: navRise 0.4s ease both;
+}
+
+@keyframes navRise {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
 /* ================================
-   LEFT
+   LEFT — tabs with a postal underline
 ================================ */
 
 .navbar-left {
@@ -36,16 +55,18 @@
 
 .navbar-left button {
     position: relative;
+    overflow: hidden;
 
     padding: 9px 12px;
-
     border: none;
+    border-radius: 6px;
     background: transparent;
 
-    color: #555;
-
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
+    letter-spacing: 0.2px;
 
     cursor: pointer;
 
@@ -56,35 +77,55 @@
 
 .navbar-left button::after {
     content: "";
-
     position: absolute;
     left: 12px;
     right: 12px;
     bottom: 3px;
-
     height: 2px;
-
-    background: #222;
-
+    background: var(--postal);
     transform: scaleX(0);
     transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
 
-    transition: transform 0.25s ease;
+/* click punch — a small ink flash from center */
+.navbar-left button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--postal);
+    opacity: 0;
+    transform: scale(1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    pointer-events: none;
 }
 
 .navbar-left button:hover {
-    color: #111;
-    background: #f7f7f7;
-    border-radius: 7px;
+    color: var(--ink);
+    background: var(--kraft);
 }
 
 .navbar-left button:hover::after {
     transform: scaleX(1);
 }
 
+.navbar-left button:active {
+    transform: scale(0.97);
+}
+
+.navbar-left button:active::before {
+    opacity: 0.18;
+    transform: scale(14);
+    transition: transform 0.3s ease, opacity 0.15s ease;
+}
+
 
 /* ================================
-   CENTER TITLE
+   CENTER TITLE — the masthead
 ================================ */
 
 .navbar-title {
@@ -94,12 +135,11 @@
 
 .navbar-title h2 {
     margin: 0;
-
-    color: #222;
-
-    font-size: 21px;
-    font-weight: 700;
-    letter-spacing: -0.4px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
 }
 
 
@@ -116,7 +156,7 @@
 
 
 /* ================================
-   SEARCH
+   SEARCH — a dashed ticket slot
 ================================ */
 
 .search-form {
@@ -126,73 +166,76 @@
     width: 230px;
     height: 40px;
 
-    border: 1px solid #ddd;
-    border-radius: 9px;
+    border: 1.5px dashed var(--line);
+    border-radius: 8px;
 
-    background: #fafafa;
+    background: var(--paper);
 
     overflow: hidden;
 
     transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+        border-color 0.25s ease,
+        border-style 0.1s,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
 }
 
 .search-form:focus-within {
     background: #fff;
-    border-color: #aaa;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+    border-color: var(--postal);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(184, 67, 31, 0.12);
 }
 
 .search-form input {
     width: 100%;
     height: 100%;
-
     padding: 0 12px;
 
     border: none;
     outline: none;
-
     background: transparent;
 
-    color: #222;
+    color: var(--ink);
+    font-family: var(--font-mono);
     font-size: 13px;
 }
 
 .search-form input::placeholder {
-    color: #999;
+    color: var(--ink-soft);
 }
 
 .search-form button {
     width: 42px;
     height: 100%;
-
     flex-shrink: 0;
 
     border: none;
-    border-left: 1px solid #eee;
-
+    border-left: 1.5px dashed var(--line);
     background: transparent;
 
     font-size: 15px;
-
     cursor: pointer;
 
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .search-form button:hover {
-    background: #f0f0f0;
+    background: var(--kraft);
+}
+
+.search-form button:active {
+    transform: scale(0.9);
 }
 
 
 /* ================================
-   CART BUTTON
+   CART BUTTON — a ticket stamp
 ================================ */
 
 .cart-nav-button {
     position: relative;
+    overflow: hidden;
 
     width: 43px;
     height: 43px;
@@ -201,29 +244,48 @@
     align-items: center;
     justify-content: center;
 
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border: 1.5px dashed var(--line);
+    border-radius: 8px;
 
-    background: #fff;
+    background: var(--paper);
 
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        background 0.25s ease,
+        border-color 0.25s ease,
+        border-style 0.1s,
+        transform 0.3s cubic-bezier(0.22, 0.9, 0.3, 1),
+        box-shadow 0.3s ease;
+}
+
+/* gleam sweep on hover */
+.cart-nav-button::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -60%;
+    width: 40%;
+    height: 220%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    transform: skewX(-20deg) translateX(-150%);
+    transition: transform 0.6s ease;
 }
 
 .cart-nav-button:hover {
-    background: #f7f7f7;
-    border-color: #ccc;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    background: var(--kraft);
+    border-color: var(--postal);
+    border-style: solid;
+    transform: translateY(-3px) rotate(-2deg);
+    box-shadow: 0 10px 20px rgba(28, 31, 26, 0.12);
+}
+
+.cart-nav-button:hover::before {
+    transform: skewX(-20deg) translateX(320%);
 }
 
 .cart-nav-button:active {
-    transform: translateY(0);
+    transform: translateY(-1px) scale(0.95);
 }
 
 
@@ -238,21 +300,20 @@
 
     font-size: 20px;
 
-    transition: transform 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .cart-nav-button:hover .cart-icon {
-    transform: scale(1.1);
+    transform: scale(1.12) rotate(4deg);
 }
 
 
 /* ================================
-   CART BADGE
+   CART BADGE — a wax-seal stamp
 ================================ */
 
 .cart-badge {
     position: absolute;
-
     top: -7px;
     right: -7px;
 
@@ -264,37 +325,65 @@
     justify-content: center;
 
     padding: 0 4px;
-
     box-sizing: border-box;
 
-    border: 2px solid #fff;
+    border: 2px solid var(--paper);
     border-radius: 50%;
 
-    background: #222;
-    color: #fff;
+    background: var(--postal);
+    color: var(--paper);
 
+    font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 700;
 
-    animation: cartBadgePop 0.25s ease;
+    animation: badgeStamp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes cartBadgePop {
-
+@keyframes badgeStamp {
     0% {
-        transform: scale(0.5);
+        transform: scale(0.4) rotate(-20deg);
         opacity: 0;
     }
 
-    70% {
-        transform: scale(1.15);
+    60% {
+        transform: scale(1.2) rotate(6deg);
         opacity: 1;
     }
 
     100% {
-        transform: scale(1);
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+
+/* ================================
+   ACCESSIBILITY
+================================ */
+
+.navbar button:focus-visible,
+.navbar input:focus-visible {
+    outline: 2px solid var(--postal);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .navbar,
+    .cart-badge {
+        animation: none !important;
     }
 
+    .navbar-left button,
+    .navbar-left button::after,
+    .navbar-left button::before,
+    .cart-nav-button,
+    .cart-nav-button::before,
+    .cart-icon,
+    .search-form,
+    .search-form button {
+        transition: none !important;
+    }
 }
 
 
@@ -325,7 +414,7 @@
     }
 
     .navbar-title h2 {
-        font-size: 18px;
+        font-size: 19px;
     }
 
     .search-form {
@@ -350,17 +439,13 @@
 
     .navbar-title {
         order: 1;
-
         width: 100%;
     }
 
     .navbar-left {
         order: 2;
-
         flex: 1;
-
         overflow-x: auto;
-
         scrollbar-width: none;
     }
 
@@ -420,7 +505,7 @@
     }
 
     .navbar-title h2 {
-        font-size: 17px;
+        font-size: 18px;
     }
 
 }

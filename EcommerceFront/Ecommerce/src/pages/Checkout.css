@@ -1,18 +1,35 @@
-/* ================================
-   CHECKOUT PAGE
-================================ */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap');
+
+/* ========================================
+   CHECKOUT PAGE — Dispatch Slip & Manifest
+   Transforms checkout into a physical dispatch
+   sheet with postal rules, fill-in-the-blank 
+   ledger inputs, and ink-stamp confirmations.
+======================================== */
 
 .checkout-page {
     width: 92%;
     max-width: 1100px;
     margin: 45px auto;
-    animation: checkoutFadeIn 0.5s ease;
+    padding-bottom: 70px;
+
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-mono);
+
+    animation: checkoutFadeIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+.checkout-page *,
+.checkout-page *::before,
+.checkout-page *::after {
+    box-sizing: border-box;
 }
 
 @keyframes checkoutFadeIn {
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(18px);
     }
 
     to {
@@ -22,152 +39,212 @@
 }
 
 
-/* ================================
-   HEADER
-================================ */
+/* ========================================
+   CHECKOUT HEADER
+======================================== */
 
 .checkout-header {
-    margin-bottom: 35px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 40px;
+    padding-bottom: 26px;
+    border-bottom: 2px solid var(--ink);
 }
 
 .checkout-label {
-    display: block;
-    margin-bottom: 8px;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 3px 9px 3px 0;
 
-    color: #777;
-
+    color: var(--postal);
+    font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 0.3px;
+
+    border-bottom: 1px dashed var(--postal);
+    animation: labelSlideIn 0.5s ease both;
 }
 
 .checkout-header h1 {
-    margin: 0;
+    margin: 0 0 6px;
 
-    color: #222;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 600;
+    font-variation-settings: 'opsz' 40;
+    letter-spacing: -0.5px;
+    line-height: 1;
 
-    font-size: 36px;
-    font-weight: 700;
+    animation: headlineRise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.08s both;
 }
 
 .checkout-header p {
-    margin: 8px 0 0;
+    margin: 0;
 
-    color: #777;
-    font-size: 15px;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 13px;
+
+    animation: headlineRise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.16s both;
+}
+
+@keyframes labelSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes headlineRise {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
-/* ================================
-   CHECKOUT CONTENT
-================================ */
+/* ========================================
+   CHECKOUT CONTENT LAYOUT
+======================================== */
 
 .checkout-content {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 380px;
-    gap: 30px;
+    gap: 32px;
     align-items: start;
 }
 
 
-/* ================================
-   FORM CONTAINER
-================================ */
+/* ========================================
+   FORM CONTAINER — Accounting Ledger Sheet
+======================================== */
 
 .checkout-form-container {
-    padding: 30px;
+    position: relative;
+    padding: 34px 30px 34px 50px;
 
-    background: #fff;
+    background: var(--paper);
+    border: 1.5px dashed var(--line);
+    border-radius: 6px;
 
-    border: 1px solid #e7e7e7;
-    border-radius: 14px;
+    box-shadow: 0 1px 0 var(--paper), 0 10px 30px rgba(28, 31, 26, 0.08);
+}
 
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+/* Red accounting margin rule down the left */
+.checkout-form-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 32px;
+    border-left: 1.5px solid rgba(184, 67, 31, 0.35);
+    pointer-events: none;
 }
 
 .checkout-form-container h2 {
-    margin: 0 0 25px;
+    margin: 0 0 24px;
 
-    color: #222;
-    font-size: 21px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 10px;
 }
 
 
-/* ================================
-   FORM
-================================ */
+/* ========================================
+   FORM & INPUTS — Fill-In-The-Blank Lines
+======================================== */
 
 .checkout-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
 }
 
 .checkout-form label {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 7px;
 
-    color: #444;
-
-    font-size: 13px;
-    font-weight: 600;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
 }
 
 .checkout-form input {
     width: 100%;
-    height: 46px;
+    height: 42px;
+    padding: 8px 4px;
 
-    box-sizing: border-box;
+    border: none;
+    border-bottom: 1.5px dashed var(--line);
+    border-radius: 0;
 
-    padding: 0 13px;
+    background: transparent;
 
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
 
     outline: none;
 
-    background: #fafafa;
-    color: #222;
-
-    font-size: 14px;
-
     transition:
-        border-color 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
+        border-color 0.25s ease,
+        border-bottom-style 0.1s ease,
+        background-color 0.25s ease;
+}
+
+.checkout-form input:hover {
+    background: rgba(184, 67, 31, 0.03);
 }
 
 .checkout-form input:focus {
-    background: #fff;
-    border-color: #999;
-
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+    border-color: var(--postal);
+    border-bottom-style: solid;
+    background: rgba(184, 67, 31, 0.05);
+    box-shadow: none;
 }
 
 .checkout-form input::placeholder {
-    color: #aaa;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
 }
 
 
-/* ================================
-   ERROR
-================================ */
+/* ========================================
+   ERROR STATE — Stamped Warning Box
+======================================== */
 
 .checkout-error {
-    padding: 12px 14px;
+    padding: 12px 15px;
 
-    border: 1px solid #e4baba;
-    border-radius: 8px;
+    border: 1.5px dashed var(--postal);
+    border-radius: 4px;
 
-    background: #fff5f5;
-    color: #b42318;
+    background: rgba(184, 67, 31, 0.06);
+    color: var(--postal);
 
-    font-size: 13px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
 
-    animation: errorAppear 0.25s ease;
+    animation: errorAppear 0.25s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 @keyframes errorAppear {
@@ -183,80 +260,110 @@
 }
 
 
-/* ================================
-   CONFIRM ORDER
-================================ */
+/* ========================================
+   CONFIRM ORDER BUTTON — Primary Ink Stamp
+======================================== */
 
 .confirm-order-button {
+    position: relative;
+    overflow: hidden;
+
     width: 100%;
     height: 48px;
 
-    margin-top: 5px;
+    margin-top: 10px;
 
     border: none;
-    border-radius: 9px;
+    border-radius: 6px;
 
-    background: #222;
-    color: #fff;
+    background: var(--ink);
+    color: var(--paper);
 
-    font-size: 15px;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 
     cursor: pointer;
 
     transition:
-        background 0.25s ease,
-        transform 0.2s ease,
-        box-shadow 0.25s ease;
+        background-color 0.25s ease,
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease,
+        opacity 0.25s ease;
+}
+
+/* Gleam sweep effect on hover */
+.confirm-order-button::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -60%;
+    width: 40%;
+    height: 220%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-20deg) translateX(-150%);
+    transition: transform 0.65s ease;
 }
 
 .confirm-order-button:hover:not(:disabled) {
-    background: #000;
+    background: #2c3128;
     transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(28, 31, 26, 0.15);
+}
 
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.15);
+.confirm-order-button:hover:not(:disabled)::before {
+    transform: skewX(-20deg) translateX(420%);
 }
 
 .confirm-order-button:active:not(:disabled) {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.98);
+    box-shadow: none;
+    transition-duration: 0.1s;
 }
 
 .confirm-order-button:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
+    background: var(--ink-soft);
     cursor: not-allowed;
 }
 
 
-/* ================================
-   BACK TO CART
-================================ */
+/* ========================================
+   BACK TO CART BUTTON — Secondary Ticket
+======================================== */
 
 .back-to-cart-button {
     width: 100%;
-    height: 45px;
+    height: 44px;
 
-    border: 1px solid #ddd;
-    border-radius: 9px;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
 
-    background: #fff;
-    color: #333;
+    background: transparent;
+    color: var(--ink);
 
-    font-size: 14px;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
 
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
+        background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease,
+        opacity 0.25s ease;
 }
 
 .back-to-cart-button:hover:not(:disabled) {
-    background: #f7f7f7;
-    border-color: #ccc;
+    background: var(--kraft);
     transform: translateY(-1px);
+}
+
+.back-to-cart-button:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .back-to-cart-button:disabled {
@@ -265,52 +372,55 @@
 }
 
 
-/* ================================
-   ORDER SUMMARY
-================================ */
+/* ========================================
+   ORDER SUMMARY — Stamped Dispatch Box
+======================================== */
 
 .checkout-summary {
     position: sticky;
-    top: 100px;
+    top: 25px;
 
-    padding: 25px;
+    padding: 26px 24px;
 
-    background: #fff;
+    background: var(--paper);
+    border: 2px dashed var(--line);
+    border-radius: 6px;
 
-    border: 1px solid #e7e7e7;
-    border-radius: 14px;
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 25px rgba(28, 31, 26, 0.06);
 }
 
 .checkout-summary h2 {
-    margin: 0 0 22px;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
 
-    color: #222;
-    font-size: 21px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+
+    border-bottom: 1.5px solid var(--ink);
 }
 
 
-/* ================================
-   ITEMS
-================================ */
+/* ========================================
+   SUMMARY ITEMS
+======================================== */
 
 .checkout-items {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 14px;
 }
 
 .checkout-item {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-
     gap: 15px;
 
-    color: #333;
-
-    font-size: 14px;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 13px;
 }
 
 .checkout-item div {
@@ -324,82 +434,106 @@
 .checkout-item div strong {
     overflow: hidden;
 
-    color: #333;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
 
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .checkout-item div span {
-    color: #888;
-    font-size: 13px;
+    color: var(--ink-soft);
+    font-size: 11px;
+    letter-spacing: 0.3px;
 }
 
 .checkout-item>strong {
     flex-shrink: 0;
 
-    color: #222;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
 }
 
 
-/* ================================
-   DIVIDER
-================================ */
+/* ========================================
+   DIVIDER — Perforation Line
+======================================== */
 
 .checkout-divider {
-    height: 1px;
-
-    margin: 22px 0;
-
-    background: #e8e8e8;
+    height: 2px;
+    margin: 20px 0;
+    background-image: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px);
+    background-size: 24px 2px;
 }
 
 
-/* ================================
+/* ========================================
    TOTAL
-================================ */
+======================================== */
 
 .checkout-total {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
+
+    padding: 10px 12px;
+
+    background: var(--kraft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
 }
 
 .checkout-total span {
-    color: #222;
-
-    font-size: 17px;
-    font-weight: 600;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .checkout-total strong {
-    color: #111;
-
-    font-size: 23px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
 }
 
 
-/* ================================
-   EMPTY CHECKOUT
-================================ */
+/* ========================================
+   EMPTY CHECKOUT — Unassigned Slot
+======================================== */
 
 .checkout-empty {
-    min-height: 65vh;
+    min-height: 55vh;
 
     display: flex;
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
 
     text-align: center;
+    padding: 40px 20px;
 
-    animation: checkoutFadeIn 0.5s ease;
+    background: var(--paper);
+    background-image:
+        linear-gradient(var(--line) 1.5px, transparent 1.5px),
+        linear-gradient(90deg, var(--line) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    background-position: center;
+
+    border: 2px dashed var(--line);
+    border-radius: 6px;
+
+    animation: checkoutFadeIn 0.5s ease both;
 }
 
 .checkout-empty-icon {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
 
     display: flex;
     align-items: center;
@@ -407,77 +541,123 @@
 
     margin-bottom: 20px;
 
+    border: 2px dashed var(--ink-soft);
     border-radius: 50%;
 
-    background: #f5f5f5;
+    background: var(--paper);
+    color: var(--ink-soft);
 
-    font-size: 38px;
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 600;
 
-    animation: checkoutEmptyFloat 2.5s ease-in-out infinite;
+    animation: stampWobble 3.2s ease-in-out infinite;
 }
 
-@keyframes checkoutEmptyFloat {
+@keyframes stampWobble {
 
     0%,
     100% {
-        transform: translateY(0);
+        transform: rotate(-8deg) translateY(0);
     }
 
     50% {
-        transform: translateY(-7px);
+        transform: rotate(-3deg) translateY(-5px);
     }
 }
 
 .checkout-empty h1 {
     margin: 0 0 8px;
 
-    color: #222;
-
-    font-size: 28px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 600;
 }
 
 .checkout-empty p {
     margin: 0 0 25px;
+    max-width: 320px;
 
-    color: #777;
-
-    font-size: 15px;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 13px;
 }
 
 .checkout-empty button {
-    min-width: 180px;
-    height: 45px;
+    min-width: 200px;
+    height: 44px;
 
     padding: 0 25px;
 
     border: none;
-    border-radius: 9px;
+    border-radius: 6px;
 
-    background: #222;
-    color: #fff;
+    background: var(--ink);
+    color: var(--paper);
 
-    font-size: 14px;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
 
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        transform 0.2s ease;
+        background-color 0.25s ease,
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .checkout-empty button:hover {
-    background: #000;
+    background: #2c3128;
     transform: translateY(-2px);
 }
 
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* ========================================
+   ACCESSIBILITY & FOCUS
+======================================== */
+
+.checkout-page a:focus-visible,
+.checkout-page button:focus-visible,
+.checkout-form input:focus-visible,
+.checkout-page [tabindex]:focus-visible {
+    outline: 2px solid var(--postal);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .checkout-page,
+    .checkout-empty-icon,
+    .checkout-label,
+    .checkout-header h1,
+    .checkout-header p,
+    .checkout-error {
+        animation: none !important;
+    }
+
+    .checkout-form input,
+    .confirm-order-button,
+    .confirm-order-button::before,
+    .back-to-cart-button,
+    .checkout-empty button {
+        transition: none !important;
+    }
+
+    .checkout-page {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+======================================== */
 
 @media (max-width: 850px) {
-
     .checkout-content {
         grid-template-columns: 1fr;
     }
@@ -485,12 +665,9 @@
     .checkout-summary {
         position: static;
     }
-
 }
 
-
 @media (max-width: 600px) {
-
     .checkout-page {
         width: 94%;
         margin: 30px auto;
@@ -501,11 +678,14 @@
     }
 
     .checkout-form-container {
-        padding: 20px;
+        padding: 22px 18px 22px 28px;
+    }
+
+    .checkout-form-container::before {
+        left: 18px;
     }
 
     .checkout-summary {
-        padding: 20px;
+        padding: 20px 18px;
     }
-
 }

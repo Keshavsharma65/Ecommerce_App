@@ -1,102 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap');
+
 /* ========================================
-   PRODUCTS PAGE
+   PRODUCTS PAGE — Postal Catalog & Manifest Grid
+   Renders product cards as individual kraft receipt
+   tickets with staggered entry animations and
+   postmark typography.
 ======================================== */
 
 .cardscontainer {
-    width: min(1400px, 94%);
-
+    width: min(1250px, 92%);
     margin: 0 auto;
-
-    padding: 35px 0 50px;
+    padding: 35px 0 70px;
 
     display: grid;
-
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 30px 24px;
 
-    gap: 25px;
+    color: var(--ink);
+    font-family: var(--font-mono);
+}
+
+.cardscontainer *,
+.cardscontainer *::before,
+.cardscontainer *::after {
+    box-sizing: border-box;
 }
 
 
 /* ========================================
-   SEARCH RESULT HEADING
+   SEARCH RESULT HEADING — Postmark Label
 ======================================== */
 
 .search-result-heading {
-    width: min(1400px, 94%);
+    width: min(1250px, 92%);
+    margin: 40px auto 0;
+    padding-bottom: 12px;
 
-    margin: 35px auto 0;
-
-    color: #171717;
-
-    font-size: 22px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 24px;
     font-weight: 600;
+    letter-spacing: -0.4px;
 
-    letter-spacing: -0.3px;
+    border-bottom: 2px solid var(--ink);
+    animation: headingAppear 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
 
-    animation: headingAppear 0.4s ease both;
+.search-result-heading::before {
+    content: "MANIFEST QUERY: ";
+    color: var(--postal);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
 }
 
 
 /* ========================================
-   NO PRODUCTS
+   INDIVIDUAL PRODUCT TICKET CARD
+======================================== */
+
+.cardscontainer .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    padding: 18px 18px 26px;
+
+    background: var(--kraft);
+    border: 1px solid var(--line);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+
+    box-shadow: 0 1px 0 var(--paper), 0 8px 20px rgba(28, 31, 26, 0.07);
+    cursor: pointer;
+
+    transition:
+        transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1),
+        box-shadow 0.35s ease,
+        background-color 0.25s ease;
+    animation: cardAppear 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+/* Torn perforation edge along card bottom */
+.cardscontainer .card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -11px;
+    height: 11px;
+    background: radial-gradient(circle at 8px 0, transparent 7px, var(--kraft) 7.5px) top left / 16px 11px repeat-x;
+    filter: drop-shadow(0 3px 2px rgba(28, 31, 26, 0.06));
+    transition: filter 0.35s ease, background-image 0.25s ease;
+    pointer-events: none;
+}
+
+.cardscontainer .card:hover {
+    transform: translateY(-5px) rotate(0.25deg);
+    background: var(--kraft-hover);
+    box-shadow: 0 1px 0 var(--paper), 0 18px 30px rgba(28, 31, 26, 0.12);
+}
+
+.cardscontainer .card:hover::after {
+    background: radial-gradient(circle at 8px 0, transparent 7px, var(--kraft-hover) 7.5px) top left / 16px 11px repeat-x;
+    filter: drop-shadow(0 5px 3px rgba(28, 31, 26, 0.08));
+}
+
+.cardscontainer .card:active {
+    transform: translateY(-1px) scale(0.99);
+    transition-duration: 0.1s;
+}
+
+
+/* ========================================
+   CARD STAGGER ENTRY
+======================================== */
+
+.cardscontainer .card:nth-child(1) {
+    animation-delay: 0.04s;
+}
+
+.cardscontainer .card:nth-child(2) {
+    animation-delay: 0.08s;
+}
+
+.cardscontainer .card:nth-child(3) {
+    animation-delay: 0.12s;
+}
+
+.cardscontainer .card:nth-child(4) {
+    animation-delay: 0.16s;
+}
+
+.cardscontainer .card:nth-child(5) {
+    animation-delay: 0.20s;
+}
+
+.cardscontainer .card:nth-child(6) {
+    animation-delay: 0.24s;
+}
+
+.cardscontainer .card:nth-child(7) {
+    animation-delay: 0.28s;
+}
+
+.cardscontainer .card:nth-child(8) {
+    animation-delay: 0.32s;
+}
+
+.cardscontainer .card:nth-child(n+9) {
+    animation-delay: 0.36s;
+}
+
+
+/* ========================================
+   NO PRODUCTS FOUND — Unfilled Ledger Slot
 ======================================== */
 
 .cardscontainer>p {
     grid-column: 1 / -1;
 
-    margin: 70px 0;
+    margin: 40px 0;
+    padding: 60px 20px;
 
     text-align: center;
 
-    color: #888;
+    background: var(--paper);
+    background-image:
+        linear-gradient(var(--line) 1.5px, transparent 1.5px),
+        linear-gradient(90deg, var(--line) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    background-position: center;
 
-    font-size: 16px;
+    border: 2px dashed var(--line);
+    border-radius: 6px;
+
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 14px;
+
+    animation: headingAppear 0.4s ease both;
+}
+
+.cardscontainer>p::before {
+    content: "[ ∅ ]";
+    display: block;
+    margin-bottom: 10px;
+
+    color: var(--postal);
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 700;
 }
 
 
 /* ========================================
-   CARD STAGGER ANIMATION
+   KEYFRAME ANIMATIONS
 ======================================== */
 
-.cardscontainer .card:nth-child(1) {
-    animation-delay: 0.05s;
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(22px) rotate(-0.5deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
 }
-
-.cardscontainer .card:nth-child(2) {
-    animation-delay: 0.10s;
-}
-
-.cardscontainer .card:nth-child(3) {
-    animation-delay: 0.15s;
-}
-
-.cardscontainer .card:nth-child(4) {
-    animation-delay: 0.20s;
-}
-
-.cardscontainer .card:nth-child(5) {
-    animation-delay: 0.25s;
-}
-
-.cardscontainer .card:nth-child(6) {
-    animation-delay: 0.30s;
-}
-
-.cardscontainer .card:nth-child(7) {
-    animation-delay: 0.35s;
-}
-
-.cardscontainer .card:nth-child(8) {
-    animation-delay: 0.40s;
-}
-
-
-/* ========================================
-   HEADING ANIMATION
-======================================== */
 
 @keyframes headingAppear {
-
     from {
         opacity: 0;
         transform: translateY(-8px);
@@ -110,62 +227,70 @@
 
 
 /* ========================================
-   LARGE TABLET
+   ACCESSIBILITY & FOCUS
+======================================== */
+
+.cardscontainer .card:focus-visible {
+    outline: 2px solid var(--postal);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .search-result-heading,
+    .cardscontainer .card,
+    .cardscontainer>p {
+        animation: none !important;
+    }
+
+    .cardscontainer .card,
+    .cardscontainer .card::after {
+        transition: none !important;
+    }
+
+    .cardscontainer .card {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
 ======================================== */
 
 @media (max-width: 1200px) {
-
     .cardscontainer {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-
-        gap: 22px;
+        gap: 26px 20px;
     }
 }
-
-
-/* ========================================
-   TABLET
-======================================== */
 
 @media (max-width: 900px) {
-
     .cardscontainer {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-
         width: 90%;
-
-        gap: 20px;
+        gap: 24px 18px;
     }
 
     .search-result-heading {
         width: 90%;
-
-        font-size: 20px;
+        font-size: 22px;
     }
 }
 
-
-/* ========================================
-   MOBILE
-======================================== */
-
 @media (max-width: 600px) {
-
     .cardscontainer {
         grid-template-columns: 1fr;
-
-        width: 88%;
-
+        width: 92%;
         padding-top: 25px;
-
-        gap: 20px;
+        gap: 28px;
     }
 
     .search-result-heading {
-        width: 88%;
-
+        width: 92%;
         margin-top: 25px;
-
-        font-size: 19px;
+        font-size: 20px;
     }
 }

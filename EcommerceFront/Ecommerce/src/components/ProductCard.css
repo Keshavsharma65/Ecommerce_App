@@ -1,83 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap');
+
 /* ========================================
-   PRODUCT CARD
+   DESIGN TOKENS
+   Same manifest identity as the orders page,
+   applied here as a paper hang-tag: sharp
+   corner + grommet instead of a plain rounded
+   card, kraft stock, ink-stamped status.
 ======================================== */
 
 .card {
-    width: 100%;
-    max-width: 300px;
+    --ink: #1c1f1a;
+    --ink-soft: #5a5d54;
+    --paper: #faf9f3;
+    --kraft: #eee7d2;
+    --kraft-hover: #e7dfc5;
+    --line: #ddd4b8;
+    --postal: #b8431f;
+    --transit: #34613c;
 
-    padding: 18px;
-
-    background: #ffffff;
-
-    border: 1px solid #e8e8e8;
-    border-radius: 18px;
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-
-    display: flex;
-    flex-direction: column;
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
-
-    overflow: hidden;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-mono: 'Space Mono', 'Courier New', monospace;
 }
 
 
 /* ========================================
-   CARD HOVER
+   CARD — a hang-tag: one sharp corner with
+   a grommet, dashed edge, kraft stock
 ======================================== */
 
+.card {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    padding: 18px;
+    background: var(--kraft);
+    border: 1.5px dashed var(--line);
+    border-radius: 4px 16px 16px 16px;
+    box-shadow: 0 8px 22px rgba(28, 31, 26, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    animation: cardAppear 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+    transition:
+        transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1),
+        box-shadow 0.35s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+/* the grommet — a rivet punched through the tag's sharp corner */
+.card::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    width: 18px;
+    height: 18px;
+    background: var(--paper);
+    border: 2px dashed var(--ink-soft);
+    border-radius: 50%;
+    transform: rotate(-10deg);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease;
+    z-index: 2;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) rotate(-0.6deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+}
+
+/* progressive enhancement: reveal on scroll where supported */
+@supports (animation-timeline: view()) {
+    .card {
+        animation: cardAppear linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 35%;
+    }
+}
+
 .card:hover {
-    transform: translateY(-7px);
+    transform: translateY(-7px) rotate(0.3deg);
+    background: var(--kraft-hover);
+    border-color: var(--postal);
+    box-shadow: 0 20px 38px rgba(28, 31, 26, 0.14);
+}
 
-    border-color: #d7d7d7;
+.card:hover::before {
+    transform: rotate(10deg) scale(1.15);
+    border-color: var(--postal);
+}
 
-    box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.11);
+.card:active {
+    transform: translateY(-3px) scale(0.99);
+    transition-duration: 0.12s;
 }
 
 
 /* ========================================
-   PRODUCT IMAGE
+   PRODUCT IMAGE — a photo window with a
+   perforation that marches on card hover
 ======================================== */
 
 .product-image {
+    position: relative;
     width: 100%;
     height: 245px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     overflow: hidden;
-
-    border-radius: 14px;
-
-    background: #f5f5f5;
-
-    margin-bottom: 18px;
+    border-radius: 4px 12px 4px 4px;
+    background: var(--paper);
+    background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 18px 18px;
+    background-position: center;
+    margin-bottom: 22px;
 }
 
+.product-image::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -11px;
+    height: 2px;
+    background-image: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px);
+    background-size: 24px 2px;
+}
+
+.card:hover .product-image::after {
+    animation: marchAnts 0.7s linear infinite;
+}
+
+@keyframes marchAnts {
+    to {
+        background-position: 24px 0;
+    }
+}
 
 .product-image img {
     width: 100%;
     height: 100%;
-
     object-fit: contain;
-
     padding: 15px;
-
-    transition:
-        transform 0.4s ease;
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-
 .card:hover .product-image img {
-    transform: scale(1.06);
+    transform: scale(1.07) rotate(-0.5deg);
 }
 
 
@@ -88,14 +169,11 @@
 .no-image {
     width: 100%;
     height: 100%;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 42px;
-
-    color: #999;
+    font-size: 40px;
+    color: var(--ink-soft);
 }
 
 
@@ -105,21 +183,26 @@
 
 .card h1 {
     margin: 4px 0 8px;
-
+    font-family: var(--font-display);
     font-size: 19px;
     line-height: 1.4;
-
     font-weight: 600;
-
-    color: #171717;
-
+    color: var(--ink);
     text-align: left;
-
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
-
     overflow: hidden;
+    background-image: linear-gradient(var(--postal), var(--postal));
+    background-repeat: no-repeat;
+    background-position: left bottom -2px;
+    background-size: 0% 2px;
+    transition: background-size 0.35s ease;
+}
+
+.card:hover h1 {
+    background-size: 100% 2px;
 }
 
 
@@ -128,40 +211,59 @@
 ======================================== */
 
 .card h2 {
-    margin: 0 0 8px;
-
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
     font-size: 22px;
-
     font-weight: 700;
-
-    color: #171717;
-
+    color: var(--ink);
     text-align: left;
+    transition: letter-spacing 0.3s ease;
+}
+
+.card:hover h2 {
+    letter-spacing: 0.5px;
 }
 
 
 /* ========================================
-   PRODUCT STATUS
+   PRODUCT STATUS — an ink stamp, not plain
+   colored text
 ======================================== */
 
 .card p {
     margin: 0 0 16px;
-
+    font-family: var(--font-mono);
     font-size: 14px;
-
     font-weight: 500;
-
     text-align: left;
 }
 
-
-.product-available {
-    color: #16803c;
+.product-available,
+.product-out {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 2px solid currentColor;
+    outline: 1px dashed currentColor;
+    outline-offset: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transform: rotate(-3deg);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.card:hover .product-available,
+.card:hover .product-out {
+    transform: rotate(0deg) scale(1.05);
+}
+
+.product-available {
+    color: var(--transit);
+}
 
 .product-out {
-    color: #d32f2f;
+    color: var(--postal);
 }
 
 
@@ -172,84 +274,98 @@
 .card-actions {
     display: flex;
     flex-direction: column;
-
     gap: 9px;
-
     margin-top: auto;
 }
 
 
 /* ========================================
-   COMMON BUTTON
+   COMMON BUTTON — clickable paper tickets
 ======================================== */
 
 .viewdetails,
 .add-cart-btn {
+    position: relative;
     width: 100%;
-
     padding: 11px 14px;
-
-    border-radius: 10px;
-
+    border-radius: 8px;
+    font-family: var(--font-mono);
     font-size: 14px;
-
-    font-weight: 600;
-
+    font-weight: 700;
+    letter-spacing: 0.2px;
     cursor: pointer;
-
+    overflow: hidden;
     transition:
         transform 0.25s ease,
         box-shadow 0.25s ease,
         background 0.25s ease,
+        border-color 0.25s ease,
         opacity 0.25s ease;
 }
 
+/* click punch — a quick ink flash from the center */
+.viewdetails::before,
+.add-cart-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+    transform: scale(1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.viewdetails:active::before,
+.add-cart-btn:active:not(:disabled)::before {
+    opacity: 0.15;
+    transform: scale(24);
+    transition: transform 0.35s ease, opacity 0.2s ease;
+}
+
+.viewdetails:active,
+.add-cart-btn:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
 
 /* ========================================
-   VIEW DETAILS
+   VIEW DETAILS — primary, ink-stamped
 ======================================== */
 
 .viewdetails {
-    background: #171717;
-
-    color: #ffffff;
-
-    border: 1px solid #171717;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
 }
-
 
 .viewdetails:hover {
     transform: translateY(-2px);
-
-    background: #333333;
-
-    box-shadow:
-        0 8px 18px rgba(0, 0, 0, 0.16);
+    background: #2c3128;
+    box-shadow: 0 10px 20px rgba(28, 31, 26, 0.22);
 }
 
 
 /* ========================================
-   ADD TO CART
+   ADD TO CART — secondary, dashed ticket
 ======================================== */
 
 .add-cart-btn {
-    background: #ffffff;
-
-    color: #171717;
-
-    border: 1px solid #d8d8d8;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1.5px dashed var(--line);
 }
-
 
 .add-cart-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-
-    background: #f5f5f5;
-
-    border-color: #bcbcbc;
-
-    box-shadow:
-        0 7px 16px rgba(0, 0, 0, 0.08);
+    background: var(--kraft);
+    border-color: var(--postal);
+    color: var(--postal);
+    box-shadow: 0 8px 16px rgba(28, 31, 26, 0.08);
 }
 
 
@@ -259,24 +375,49 @@
 
 .add-cart-btn:disabled {
     cursor: not-allowed;
-
     opacity: 0.5;
-
-    background: #eeeeee;
-
-    color: #888;
-
-    border-color: #dddddd;
+    background: var(--paper);
+    color: var(--ink-soft);
+    border-style: dashed;
+    border-color: var(--line);
 }
 
 
 /* ========================================
-   BUTTON PRESS
+   ACCESSIBILITY
 ======================================== */
 
-.viewdetails:active,
-.add-cart-btn:active {
-    transform: scale(0.97);
+.viewdetails:focus-visible,
+.add-cart-btn:focus-visible {
+    outline: 2px solid var(--postal);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .card,
+    .product-image::after {
+        animation: none !important;
+    }
+
+    .card,
+    .card::before,
+    .product-image img,
+    .card h1,
+    .card h2,
+    .product-available,
+    .product-out,
+    .viewdetails,
+    .add-cart-btn,
+    .viewdetails::before,
+    .add-cart-btn::before {
+        transition: none !important;
+    }
+
+    .card {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 
@@ -285,7 +426,6 @@
 ======================================== */
 
 @media (max-width: 700px) {
-
     .card {
         max-width: 100%;
     }

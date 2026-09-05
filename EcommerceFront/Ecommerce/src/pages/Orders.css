@@ -1,18 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap');
+
 /* ========================================
-   ORDERS PAGE
+   DESIGN TOKENS
+   Manifest / receipt identity — treats each
+   order as a physical ticket you tear off,
+   stamp, and track. Ink on paper, not glass
+   on card. Every interaction below acts like
+   handling paper: it lifts, presses, settles.
 ======================================== */
 
 .orders-page {
+    --ink: #1c1f1a;
+    --ink-soft: #5a5d54;
+    --paper: #faf9f3;
+    --kraft: #eee7d2;
+    --kraft-hover: #e7dfc5;
+    --line: #ddd4b8;
+    --postal: #b8431f;
+    --transit: #34613c;
+    --pending: #9c6b13;
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-mono: 'Space Mono', 'Courier New', monospace;
+
     width: 100%;
     max-width: 1100px;
-
     margin: 0 auto;
-
-    padding: 45px 30px 60px;
-
+    padding: 50px 30px 70px;
     box-sizing: border-box;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-mono);
+}
 
-    color: #171717;
+.orders-page *,
+.orders-page *::before,
+.orders-page *::after {
+    box-sizing: border-box;
 }
 
 
@@ -21,101 +45,135 @@
 ======================================== */
 
 .orders-header {
+    position: relative;
     display: flex;
-
-    align-items: center;
-
+    align-items: flex-end;
     justify-content: space-between;
-
     gap: 25px;
-
-    margin-bottom: 35px;
-
-    padding-bottom: 25px;
-
-    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 40px;
+    padding: 0 0 26px;
+    border-bottom: 2px solid var(--ink);
 }
-
 
 .orders-label {
     display: inline-block;
-
-    margin-bottom: 8px;
-
-    color: #888;
-
-    font-size: 11px;
-
+    margin-bottom: 10px;
+    padding: 3px 9px 3px 0;
+    color: var(--postal);
+    font-family: var(--font-mono);
+    font-size: 12px;
     font-weight: 700;
-
-    letter-spacing: 1.5px;
+    letter-spacing: 0.3px;
+    border-bottom: 1px dashed var(--postal);
+    animation: labelSlideIn 0.5s ease both;
 }
-
 
 .orders-header h1 {
-    margin: 0 0 7px;
-
-    font-size: 34px;
-
-    font-weight: 750;
-
-    letter-spacing: -0.9px;
+    margin: 0 0 6px;
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 600;
+    font-variation-settings: 'opsz' 40;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    animation: headlineRise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.08s both;
 }
-
 
 .orders-header p {
     margin: 0;
+    color: var(--ink-soft);
+    font-size: 13px;
+    animation: headlineRise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.16s both;
+}
 
-    color: #888;
+@keyframes labelSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
 
-    font-size: 14px;
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes headlineRise {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
 /* ========================================
-   ORDER COUNT
+   ORDER COUNT — a postmark stamp that
+   settles into place, then wakes up on hover
 ======================================== */
 
 .orders-count {
-    min-width: 85px;
-
-    padding: 15px 20px;
-
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    padding: 10px;
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
-
-    background: #f7f7f7;
-
-    border: 1px solid #e8e8e8;
-
-    border-radius: 14px;
+    gap: 2px;
+    background: var(--paper);
+    border: 2px dashed var(--ink);
+    border-radius: 50%;
+    cursor: default;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease;
+    animation: stampSettle 0.7s cubic-bezier(0.22, 0.9, 0.3, 1.15) 0.2s both;
 }
 
+.orders-count:hover {
+    transform: rotate(0deg) scale(1.08);
+    border-color: var(--postal);
+}
+
+.orders-count:active {
+    transform: rotate(0deg) scale(0.96);
+    transition-duration: 0.1s;
+}
 
 .orders-count strong {
-    font-size: 24px;
-
-    font-weight: 750;
-
-    color: #171717;
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
 }
 
-
 .orders-count span {
-    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--ink-soft);
+    letter-spacing: 0.5px;
+}
 
-    color: #888;
+@keyframes stampSettle {
+    0% {
+        transform: rotate(-6deg) scale(1.5);
+        opacity: 0;
+    }
 
-    font-size: 11px;
+    60% {
+        transform: rotate(-9deg) scale(0.94);
+        opacity: 1;
+    }
 
-    text-transform: uppercase;
-
-    letter-spacing: 0.7px;
+    100% {
+        transform: rotate(-6deg) scale(1);
+        opacity: 1;
+    }
 }
 
 
@@ -125,60 +183,106 @@
 
 .orders-list {
     display: flex;
-
     flex-direction: column;
-
-    gap: 18px;
+    gap: 30px;
 }
 
 
 /* ========================================
-   ORDER CARD
+   ORDER CARD — a torn receipt that lifts on
+   hover, presses on click, and rises into
+   view as you scroll (native CSS, no JS)
 ======================================== */
 
 .order-card {
-    padding: 24px;
-
-    background: #ffffff;
-
-    border: 1px solid #e7e7e7;
-
-    border-radius: 17px;
-
-    box-shadow:
-        0 6px 22px rgba(0, 0, 0, 0.045);
-
+    position: relative;
+    padding: 26px 26px 34px;
+    background: var(--kraft);
+    border: 1px solid var(--line);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 1px 0 var(--paper), 0 8px 20px rgba(28, 31, 26, 0.07);
+    cursor: pointer;
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-
-    animation: orderAppear 0.4s ease both;
+        transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1),
+        box-shadow 0.35s ease,
+        background 0.25s ease;
+    animation: orderAppear 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
+/* torn perforation edge along the bottom of each ticket */
+.order-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -11px;
+    height: 11px;
+    background:
+        radial-gradient(circle at 8px 0, transparent 7px, var(--kraft) 7.5px) top left / 16px 11px repeat-x;
+    filter: drop-shadow(0 3px 2px rgba(28, 31, 26, 0.06));
+    transition: filter 0.35s ease;
+    pointer-events: none;
+}
 
 .order-card:hover {
-    transform: translateY(-4px);
-
-    border-color: #d5d5d5;
-
-    box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px) rotate(0.25deg);
+    background: var(--kraft-hover);
+    box-shadow: 0 1px 0 var(--paper), 0 20px 34px rgba(28, 31, 26, 0.12);
 }
 
+.order-card:hover::after {
+    background:
+        radial-gradient(circle at 8px 0, transparent 7px, var(--kraft-hover) 7.5px) top left / 16px 11px repeat-x;
+    filter: drop-shadow(0 6px 4px rgba(28, 31, 26, 0.09));
+}
+
+.order-card:active {
+    transform: translateY(-1px) scale(0.99);
+    transition-duration: 0.12s;
+    box-shadow: 0 1px 0 var(--paper), 0 6px 14px rgba(28, 31, 26, 0.1);
+}
+
+.orders-list .order-card:nth-child(2) {
+    animation-delay: 0.06s;
+}
+
+.orders-list .order-card:nth-child(3) {
+    animation-delay: 0.12s;
+}
+
+.orders-list .order-card:nth-child(4) {
+    animation-delay: 0.18s;
+}
+
+.orders-list .order-card:nth-child(n+5) {
+    animation-delay: 0.22s;
+}
 
 @keyframes orderAppear {
-
     from {
         opacity: 0;
-
-        transform: translateY(10px);
+        transform: translateY(24px) rotate(-0.6deg);
     }
 
     to {
         opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+}
 
-        transform: translateY(0);
+/* progressive enhancement: in browsers that support scroll-driven
+   animation, cards reveal as they cross into view on scroll instead
+   of all firing on load — no JS/IntersectionObserver needed */
+@supports (animation-timeline: view()) {
+    .order-card {
+        animation: orderAppear linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 35%;
+    }
+
+    .orders-list .order-card:nth-child(n) {
+        animation-delay: 0s;
     }
 }
 
@@ -189,221 +293,295 @@
 
 .order-card-top {
     display: flex;
-
-    align-items: center;
-
+    align-items: flex-start;
     justify-content: space-between;
-
     gap: 20px;
 }
 
-
 .order-number {
     display: block;
-
-    margin-bottom: 6px;
-
-    color: #999;
-
-    font-size: 10px;
-
+    margin-bottom: 8px;
+    color: var(--postal);
+    font-family: var(--font-mono);
+    font-size: 11px;
     font-weight: 700;
-
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    transition: letter-spacing 0.3s ease;
 }
 
+.order-number::before {
+    content: "№ ";
+}
+
+.order-card:hover .order-number {
+    letter-spacing: 1.2px;
+}
 
 .order-card-top h2 {
     margin: 0;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.25;
+    background-image: linear-gradient(var(--postal), var(--postal));
+    background-repeat: no-repeat;
+    background-position: left bottom -2px;
+    background-size: 0% 2px;
+    transition: background-size 0.35s ease;
+}
 
-    color: #171717;
-
-    font-size: 19px;
-
-    font-weight: 700;
+.order-card:hover .order-card-top h2 {
+    background-size: 100% 2px;
 }
 
 
 /* ========================================
-   ORDER STATUS
+   ORDER STATUS — a rotated ink stamp that
+   presses flat and catches a gleam on hover
 ======================================== */
 
 .order-status {
-    padding: 7px 12px;
-
-    border-radius: 50px;
-
-    background: #ecfdf3;
-
-    color: #16803c;
-
-    border: 1px solid #c9f1d8;
-
+    position: relative;
+    flex-shrink: 0;
+    padding: 7px 14px;
+    color: var(--transit);
+    background: transparent;
+    border: 2px solid var(--transit);
+    border-radius: 6px;
+    outline: 1px dashed var(--transit);
+    outline-offset: 3px;
+    font-family: var(--font-mono);
     font-size: 11px;
-
     font-weight: 700;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: rotate(-4deg);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.order-status::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -60%;
+    width: 40%;
+    height: 220%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+    transform: skewX(-20deg) translateX(-150%);
+    transition: transform 0.7s ease;
+}
+
+.order-card:hover .order-status {
+    transform: rotate(0deg) scale(1.06);
+}
+
+.order-card:hover .order-status::before {
+    transform: skewX(-20deg) translateX(420%);
+}
+
+.order-card:active .order-status {
+    transform: rotate(0deg) scale(0.94);
+    transition-duration: 0.12s;
+}
+
+.order-status.is-pending,
+.order-status.is-processing {
+    color: var(--pending);
+    border-color: var(--pending);
+    outline-color: var(--pending);
+}
+
+.order-status.is-cancelled,
+.order-status.is-delayed {
+    color: var(--postal);
+    border-color: var(--postal);
+    outline-color: var(--postal);
 }
 
 
 /* ========================================
-   DIVIDER
+   DIVIDER — a perforation that "marches"
+   while its ticket is being handled
 ======================================== */
 
 .order-divider {
-    height: 1px;
+    height: 2px;
+    margin: 22px 0;
+    background-image: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px);
+    background-size: 24px 2px;
+}
 
-    margin: 20px 0;
+.order-card:hover .order-divider {
+    animation: marchAnts 0.7s linear infinite;
+}
 
-    background: #eeeeee;
+@keyframes marchAnts {
+    to {
+        background-position: 24px 0;
+    }
 }
 
 
 /* ========================================
-   ORDER DETAILS
+   ORDER DETAILS — each cell lifts, gets an
+   accent bar on hover, and punches on click
 ======================================== */
 
 .order-details {
     display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(180px, 1fr));
-
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
 }
-
 
 .order-detail {
+    position: relative;
     min-width: 0;
-
-    padding: 14px;
-
-    background: #fafafa;
-
-    border: 1px solid #eeeeee;
-
-    border-radius: 11px;
-
+    padding: 13px 15px;
+    background: var(--paper);
     display: flex;
-
     flex-direction: column;
-
-    gap: 6px;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease;
+    gap: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
+.order-detail::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--postal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.order-detail::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(184, 67, 31, 0.2), transparent 70%);
+    opacity: 0;
+    transform: scale(0.4);
+    transition: transform 0.45s ease, opacity 0.45s ease;
+    pointer-events: none;
+}
 
 .order-detail:hover {
-    background: #f6f6f6;
-
-    border-color: #dedede;
+    background: #fff;
+    transform: translateY(-2px);
 }
 
+.order-detail:hover::after {
+    transform: scaleX(1);
+}
+
+.order-detail:active::before {
+    opacity: 1;
+    transform: scale(1.5);
+    transition: transform 0.15s ease, opacity 0.1s ease;
+}
 
 .order-detail-label {
-    color: #999;
-
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
     font-size: 10px;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.7px;
+    letter-spacing: 0.3px;
 }
 
-
 .order-detail strong {
-    color: #222;
-
+    color: var(--ink);
+    font-family: var(--font-mono);
     font-size: 14px;
-
-    font-weight: 600;
-
+    font-weight: 700;
     overflow-wrap: anywhere;
 }
 
 
 /* ========================================
-   NO ORDERS
+   NO ORDERS — an empty manifest slot with
+   one deliberate ambient loop
 ======================================== */
 
 .no-orders {
     min-height: 380px;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
-
     text-align: center;
-
-    border: 1px dashed #dcdcdc;
-
-    border-radius: 18px;
-
-    background: #fafafa;
+    background: var(--paper);
+    background-image:
+        linear-gradient(var(--line) 1.5px, transparent 1.5px),
+        linear-gradient(90deg, var(--line) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    background-position: center;
+    border: 2px dashed var(--line);
+    border-radius: 6px;
+    animation: fadeIn 0.5s ease both;
 }
-
 
 .no-orders-icon {
-    width: 80px;
-
-    height: 80px;
-
-    margin-bottom: 18px;
-
+    width: 76px;
+    height: 76px;
+    margin-bottom: 20px;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
+    background: var(--paper);
+    border: 2px dashed var(--ink-soft);
     border-radius: 50%;
-
-    background: #f1f1f1;
-
-    font-size: 34px;
-
-    animation: boxFloat 2.5s ease-in-out infinite;
+    color: var(--ink-soft);
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 600;
+    animation: stampWobble 3.2s ease-in-out infinite;
 }
-
-
-@keyframes boxFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-7px);
-    }
-}
-
 
 .no-orders h2 {
-    margin: 0 0 7px;
-
-    color: #222;
-
-    font-size: 22px;
-
-    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 23px;
+    font-weight: 600;
 }
-
 
 .no-orders p {
     margin: 0;
+    max-width: 320px;
+    color: var(--ink-soft);
+    font-size: 13px;
+}
 
-    color: #999;
+@keyframes stampWobble {
 
-    font-size: 14px;
+    0%,
+    100% {
+        transform: rotate(-8deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(-3deg) translateY(-5px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 
@@ -413,64 +591,124 @@
 
 .orders-state {
     min-height: 60vh;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
-
     text-align: center;
 }
 
-
 .orders-state p {
-    margin-top: 15px;
-
-    color: #888;
-
-    font-size: 14px;
+    margin-top: 16px;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    animation: fadeIn 0.4s ease 0.1s both;
 }
-
 
 .orders-loader {
-    width: 38px;
-
-    height: 38px;
-
-    border: 3px solid #e7e7e7;
-
-    border-top-color: #171717;
-
+    width: 34px;
+    height: 34px;
+    border: 3px dashed var(--line);
+    border-top-color: var(--postal);
     border-radius: 50%;
-
-    animation: spin 0.8s linear infinite;
+    animation: spin 0.9s linear infinite;
 }
 
-
 @keyframes spin {
-
     to {
         transform: rotate(360deg);
     }
 }
 
-
 .orders-error-icon {
-    font-size: 40px;
-
+    font-size: 36px;
     margin-bottom: 10px;
+    color: var(--postal);
+    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translateX(-1px) rotate(-2deg);
+    }
+
+    20%,
+    80% {
+        transform: translateX(2px) rotate(2deg);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translateX(-4px) rotate(-3deg);
+    }
+
+    40%,
+    60% {
+        transform: translateX(4px) rotate(3deg);
+    }
+
+    100% {
+        transform: translateX(0) rotate(0);
+    }
+}
 
 .orders-state h2 {
     margin: 0;
-
+    font-family: var(--font-display);
     font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+}
 
-    font-weight: 700;
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+.orders-page a:focus-visible,
+.orders-page button:focus-visible,
+.orders-page [tabindex]:focus-visible {
+    outline: 2px solid var(--postal);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .order-card,
+    .orders-loader,
+    .orders-count,
+    .orders-label,
+    .orders-header h1,
+    .orders-header p,
+    .no-orders,
+    .no-orders-icon,
+    .orders-state p,
+    .orders-error-icon {
+        animation: none !important;
+    }
+
+    .order-card,
+    .order-card::after,
+    .order-status,
+    .order-status::before,
+    .order-detail,
+    .order-detail::before,
+    .order-detail::after,
+    .order-number,
+    .order-card-top h2,
+    .orders-count {
+        transition: none !important;
+    }
+
+    .order-card {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 
@@ -479,33 +717,26 @@
 ======================================== */
 
 @media (max-width: 700px) {
-
     .orders-page {
-        padding: 30px 18px 45px;
+        padding: 34px 18px 50px;
     }
 
     .orders-header {
-        flex-direction: column;
+        flex-direction: row;
+        align-items: center;
+    }
 
-        align-items: flex-start;
+    .orders-header h1 {
+        font-size: 30px;
     }
 
     .orders-count {
-        align-self: stretch;
-
-        flex-direction: row;
-
-        gap: 8px;
-
-        justify-content: flex-start;
-    }
-
-    .orders-count span {
-        margin-top: 0;
+        width: 76px;
+        height: 76px;
     }
 
     .order-card {
-        padding: 18px;
+        padding: 20px 18px 28px;
     }
 
     .order-details {
@@ -513,17 +744,20 @@
     }
 }
 
-
 @media (max-width: 450px) {
+    .orders-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
 
-    .orders-header h1 {
-        font-size: 28px;
+    .orders-count {
+        align-self: flex-start;
     }
 
     .order-card-top {
-        align-items: flex-start;
-
         flex-direction: column;
+        gap: 12px;
     }
 
     .order-status {

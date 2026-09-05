@@ -1,277 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap');
+
 /* ========================================
-   UPDATE PRODUCT PAGE
+   UPDATE PRODUCT PAGE — Ledger Amendment Sheet
+   Theme: Paper, postal-red margin rule, fill-in-the-blank
+   lines, kraft notes, and ink-stamp submission.
 ======================================== */
 
 .update-product-container {
+    position: relative;
     width: min(900px, 92%);
-
     margin: 45px auto;
-    padding: 35px;
+    padding: 40px 36px 40px 60px;
 
-    background: #ffffff;
+    background: var(--paper);
+    border: 1.5px dashed var(--line);
+    border-radius: 6px;
 
-    border: 1px solid #e8e8e8;
-    border-radius: 16px;
+    box-shadow: 0 1px 0 var(--paper), 0 10px 30px rgba(28, 31, 26, 0.08);
 
-    box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.06);
+    color: var(--ink);
+    font-family: var(--font-mono);
 
-    animation: updateFormAppear 0.5s ease both;
+    animation: updateFormAppear 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
-
-/* ========================================
-   PAGE TITLE
-======================================== */
-
-.update-product-container h1 {
-    margin: 0 0 30px;
-
-    text-align: center;
-
-    color: #171717;
-
-    font-size: 28px;
-    font-weight: 700;
-
-    letter-spacing: -0.5px;
-}
-
-
-/* ========================================
-   FORM
-======================================== */
-
-.update-product-form {
-    display: grid;
-
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 18px;
-}
-
-
-/* ========================================
-   INPUTS / TEXTAREA / SELECT
-======================================== */
-
-.update-product-form input,
-.update-product-form textarea,
-.update-product-form select {
-    width: 100%;
-
+.update-product-container *,
+.update-product-container *::before,
+.update-product-container *::after {
     box-sizing: border-box;
-
-    padding: 12px 14px;
-
-    border: 1px solid #dcdcdc;
-    border-radius: 9px;
-
-    outline: none;
-
-    background: #fafafa;
-    color: #222;
-
-    font-family: inherit;
-    font-size: 14px;
-
-    transition:
-        border-color 0.25s ease,
-        background-color 0.25s ease,
-        box-shadow 0.25s ease;
 }
 
-
-/* Placeholder */
-
-.update-product-form input::placeholder,
-.update-product-form textarea::placeholder {
-    color: #999;
+/* The ledger margin — a postal-red accounting rule down the left */
+.update-product-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 40px;
+    border-left: 1.5px solid rgba(184, 67, 31, 0.35);
+    pointer-events: none;
 }
-
-
-/* Focus */
-
-.update-product-form input:focus,
-.update-product-form textarea:focus,
-.update-product-form select:focus {
-    border-color: #888;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 0 0 3px rgba(0, 0, 0, 0.05);
-}
-
-
-/* ========================================
-   TEXTAREA
-======================================== */
-
-.update-product-form textarea {
-    grid-column: 1 / -1;
-
-    min-height: 110px;
-
-    resize: vertical;
-}
-
-
-/* ========================================
-   DATE INPUT
-======================================== */
-
-.update-product-form input[type="date"] {
-    color: #444;
-
-    cursor: pointer;
-}
-
-
-/* ========================================
-   NUMBER INPUT
-======================================== */
-
-.update-product-form input[type="number"] {
-    appearance: textfield;
-}
-
-
-/* ========================================
-   STATUS
-======================================== */
-
-.status-label {
-    display: flex;
-    flex-direction: column;
-
-    gap: 7px;
-
-    color: #444;
-
-    font-size: 13px;
-    font-weight: 500;
-}
-
-
-/* ========================================
-   IMAGE UPLOAD
-======================================== */
-
-.image-label {
-    grid-column: 1 / -1;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 9px;
-
-    color: #444;
-
-    font-size: 13px;
-    font-weight: 500;
-}
-
-
-.image-label input[type="file"] {
-    padding: 10px;
-
-    background: #fafafa;
-
-    cursor: pointer;
-}
-
-
-/* File selector */
-
-.image-label input[type="file"]::file-selector-button {
-    margin-right: 12px;
-
-    padding: 8px 13px;
-
-    border: none;
-    border-radius: 7px;
-
-    background: #171717;
-    color: #ffffff;
-
-    font-family: inherit;
-    font-size: 13px;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.25s ease,
-        transform 0.2s ease;
-}
-
-
-.image-label input[type="file"]::file-selector-button:hover {
-    background: #333;
-}
-
-
-.image-label input[type="file"]::file-selector-button:active {
-    transform: scale(0.96);
-}
-
-
-/* ========================================
-   UPDATE BUTTON
-======================================== */
-
-.update-product-form>button {
-    grid-column: 1 / -1;
-
-    width: 100%;
-
-    margin-top: 8px;
-
-    padding: 13px 20px;
-
-    border: none;
-    border-radius: 9px;
-
-    background: #171717;
-    color: #ffffff;
-
-    font-family: inherit;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.25s ease,
-        transform 0.2s ease,
-        box-shadow 0.25s ease;
-}
-
-
-.update-product-form>button:hover {
-    background: #333;
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 18px rgba(0, 0, 0, 0.15);
-}
-
-
-.update-product-form>button:active {
-    transform: translateY(0) scale(0.98);
-
-    box-shadow: none;
-}
-
-
-/* ========================================
-   PAGE ENTRANCE ANIMATION
-======================================== */
 
 @keyframes updateFormAppear {
-
     from {
         opacity: 0;
         transform: translateY(18px);
@@ -285,17 +55,352 @@
 
 
 /* ========================================
-   TABLET
+   PAGE TITLE & SUBTITLE
+======================================== */
+
+.update-product-container h1 {
+    margin: 0 0 6px;
+    text-align: center;
+
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 600;
+    font-variation-settings: 'opsz' 32;
+    letter-spacing: -0.4px;
+    line-height: 1.1;
+}
+
+.update-product-subtitle {
+    display: block;
+    margin-bottom: 30px;
+    text-align: center;
+
+    color: var(--postal);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.update-product-subtitle::before {
+    content: "MANIFEST AMENDMENT № ";
+}
+
+
+/* ========================================
+   FORM GRID
+======================================== */
+
+.update-product-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 24px;
+}
+
+
+/* ========================================
+   INPUTS & SELECTS — Fill-in-the-blank lines
+======================================== */
+
+.update-product-form input,
+.update-product-form select {
+    width: 100%;
+    padding: 9px 4px;
+
+    border: none;
+    border-bottom: 1.5px dashed var(--line);
+    border-radius: 0;
+
+    background: transparent;
+
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        border-bottom-style 0.1s ease,
+        background-color 0.25s ease;
+}
+
+.update-product-form input:hover,
+.update-product-form select:hover {
+    background: rgba(184, 67, 31, 0.03);
+}
+
+.update-product-form input::placeholder,
+.update-product-form textarea::placeholder {
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+}
+
+.update-product-form input:focus,
+.update-product-form textarea:focus,
+.update-product-form select:focus {
+    border-color: var(--postal);
+    background: rgba(184, 67, 31, 0.05);
+}
+
+.update-product-form input:focus,
+.update-product-form select:focus {
+    border-bottom-style: solid;
+}
+
+
+/* ========================================
+   TEXTAREA — Kraft Note Box
+======================================== */
+
+.update-product-form textarea {
+    grid-column: 1 / -1;
+    min-height: 110px;
+
+    padding: 12px 14px;
+
+    border: 1.5px dashed var(--line);
+    border-radius: 4px;
+
+    background: var(--kraft);
+
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+
+    outline: none;
+    resize: vertical;
+
+    transition:
+        border-color 0.25s ease,
+        border-style 0.1s ease,
+        background-color 0.25s ease;
+}
+
+.update-product-form textarea:focus {
+    border-style: solid;
+    border-color: var(--postal);
+    background: #ffffff;
+}
+
+
+/* ========================================
+   SPECIAL INPUT TYPES
+======================================== */
+
+.update-product-form input[type="date"] {
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.update-product-form input[type="number"] {
+    appearance: textfield;
+}
+
+
+/* ========================================
+   LABELS & FIELD WRAPPERS
+======================================== */
+
+.status-label,
+.field-label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+
+/* ========================================
+   IMAGE UPLOAD — Postal Field Component
+======================================== */
+
+.image-label {
+    grid-column: 1 / -1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.image-label input[type="file"] {
+    padding: 10px;
+
+    border: 1.5px dashed var(--line);
+    border-radius: 4px;
+
+    background: var(--paper);
+
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.image-label input[type="file"]:hover {
+    border-color: var(--postal);
+    background: rgba(184, 67, 31, 0.03);
+}
+
+.image-label input[type="file"]::file-selector-button {
+    margin-right: 12px;
+    padding: 7px 14px;
+
+    border: none;
+    border-radius: 4px;
+
+    background: var(--ink);
+    color: var(--paper);
+
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.2s ease;
+}
+
+.image-label input[type="file"]::file-selector-button:hover {
+    background: #2c3128;
+}
+
+.image-label input[type="file"]::file-selector-button:active {
+    transform: scale(0.96);
+}
+
+
+/* ========================================
+   UPDATE BUTTON — Pressable Ink Stamp
+======================================== */
+
+.update-product-form>button {
+    position: relative;
+    overflow: hidden;
+
+    grid-column: 1 / -1;
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 14px 20px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: var(--ink);
+    color: var(--paper);
+
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease;
+}
+
+/* Gleam sweep effect on hover */
+.update-product-form>button::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -60%;
+    width: 40%;
+    height: 220%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-20deg) translateX(-150%);
+    transition: transform 0.65s ease;
+}
+
+.update-product-form>button:hover {
+    background: #2c3128;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(28, 31, 26, 0.15);
+}
+
+.update-product-form>button:hover::before {
+    transform: skewX(-20deg) translateX(420%);
+}
+
+.update-product-form>button:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 4px 10px rgba(28, 31, 26, 0.1);
+    transition-duration: 0.1s;
+}
+
+
+/* ========================================
+   ACCESSIBILITY & FOCUS
+======================================== */
+
+.update-product-container a:focus-visible,
+.update-product-container button:focus-visible,
+.update-product-form input:focus-visible,
+.update-product-form textarea:focus-visible,
+.update-product-form select:focus-visible {
+    outline: 2px solid var(--postal);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .update-product-container {
+        animation: none !important;
+    }
+
+    .update-product-container,
+    .update-product-form input,
+    .update-product-form textarea,
+    .update-product-form select,
+    .update-product-form>button,
+    .update-product-form>button::before,
+    .image-label input[type="file"],
+    .image-label input[type="file"]::file-selector-button {
+        transition: none !important;
+    }
+
+    .update-product-container {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
 ======================================== */
 
 @media (max-width: 700px) {
-
     .update-product-container {
         width: 88%;
-
         margin: 30px auto;
+        padding: 28px 24px 28px 46px;
+    }
 
-        padding: 25px;
+    .update-product-container::before {
+        left: 26px;
     }
 
     .update-product-form {
@@ -309,40 +414,37 @@
     }
 
     .update-product-container h1 {
-        font-size: 25px;
+        font-size: 26px;
     }
 }
 
-
-/* ========================================
-   MOBILE
-======================================== */
-
 @media (max-width: 450px) {
-
     .update-product-container {
-        width: 88%;
-
+        width: 92%;
         margin: 20px auto;
+        padding: 22px 18px;
+        border-radius: 6px;
+    }
 
-        padding: 20px;
-
-        border-radius: 12px;
+    .update-product-container::before {
+        display: none;
     }
 
     .update-product-container h1 {
-        margin-bottom: 22px;
-
-        font-size: 23px;
+        margin-bottom: 4px;
+        font-size: 22px;
     }
 
     .update-product-form {
-        gap: 14px;
+        gap: 16px;
     }
 
     .update-product-form input,
-    .update-product-form textarea,
     .update-product-form select {
-        padding: 11px 12px;
+        padding: 8px 2px;
+    }
+
+    .update-product-form textarea {
+        padding: 10px 12px;
     }
 }

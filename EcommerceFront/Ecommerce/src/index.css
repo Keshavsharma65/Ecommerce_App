@@ -1,40 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap');
+
 /* ========================================
-   GLOBAL RESET
+   GLOBAL DESIGN TOKENS & RESET
+   Manifest / receipt identity — ink on paper,
+   dusted kraft backing, stamped edges, and 
+   mono ledger typography.
 ======================================== */
 
-* {
+:root {
+  --ink: #1c1f1a;
+  --ink-soft: #5a5d54;
+  --paper: #faf9f3;
+  --kraft: #eee7d2;
+  --kraft-hover: #e7dfc5;
+  --line: #ddd4b8;
+  --postal: #b8431f;
+  --transit: #34613c;
+  --pending: #9c6b13;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--paper);
 }
 
 body {
   margin: 0;
-
   min-width: 320px;
 
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
 
-  background: #f8f8f8;
-  color: #171717;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Form Controls Reset */
 button,
 input,
 textarea,
 select {
-  font: inherit;
+  font-family: var(--font-mono);
+  font-size: inherit;
+  color: inherit;
 }
 
 button {
@@ -49,31 +70,56 @@ img {
 a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-::selection {
-  background: #171717;
-  color: #ffffff;
+a:hover {
+  color: var(--postal);
 }
 
 
 /* ========================================
-   SCROLLBAR
+   CUSTOM PAPER SELECTION & SCROLLBAR
 ======================================== */
 
+::selection {
+  background: var(--kraft-hover);
+  color: var(--postal);
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f5f5;
+  background: var(--paper);
+  border-left: 1px dashed var(--line);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cfcfcf;
-  border-radius: 10px;
+  background: var(--line);
+  border: 2px solid var(--paper);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  background: var(--ink-soft);
+}
+
+
+/* ========================================
+   ACCESSIBILITY & REDUCED MOTION
+======================================== */
+
+:focus-visible {
+  outline: 2px solid var(--postal);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
